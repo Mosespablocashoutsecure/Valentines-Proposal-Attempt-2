@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Will You Be My Valentine?</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 40px 50px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+      max-width: 400px;
+      animation: popIn 1s ease;
+    }
+
+    h1 {
+      color: #ff4d6d;
+      margin-bottom: 10px;
+      font-size: 2.2em;
+    }
+
+    p {
+      color: #555;
+      font-size: 1.1em;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 1em;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #yes {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    #no {
+      background: #ddd;
+      color: #333;
+      position: relative;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      color: #ff4d6d;
+      font-size: 20px;
+      animation: float 4s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    @keyframes popIn {
+      from {
+        transform: scale(0.7);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="card">
+    <h1>Hey MY beautiful sexy wonderful amazing smart mama</h1>
+    <p>I've been meaning to ask…<br><strong>Will you be my Valentine?</strong></p>
+    <div class="buttons">
+      <button id="yes">Yes😝</button>
+      <button id="no">No😲</button>
+    </div>
+  </div>
+
+  <div class="card hidden" id="success">
+    <h1>I know you'd say yes!!!!</h1>
+    <p>Now I am the happiest person alive.<br>I love you so so much ❤️</p>
+    <p>I just need to re-route some atomic bombs away from your house 🤷🏾‍♂️ (they were for incase you said no) <p>
+  </div>
+
+  <div class="hearts" id="hearts"></div>
+
+  <script>
+    const yesBtn = document.getElementById('yes');
+    const noBtn = document.getElementById('no');
+    const card = document.getElementById('card');
+    const success = document.getElementById('success');
+    const heartsContainer = document.getElementById('hearts');
+
+    let noClicks = 0;
+    let yesScale = 1;
+
+    noBtn.addEventListener('click', () => {
+      noClicks++;
+      yesScale *= 2;
+      yesBtn.style.transform = `scale(${yesScale})`;
+
+      if (noClicks === 1) {
+        noBtn.textContent = 'Sure? 😠';
+      } else if (noClicks === 2) {
+        noBtn.textContent = 'No vex me o mama 😤';
+      } else if (noClicks === 3) {
+        noBtn.textContent = 'Pleaseeeeee mamaaaa 😭';
+      } else if (noClicks >= 4) {
+        yesBtn.style.position = 'fixed';
+        yesBtn.style.top = '0';
+        yesBtn.style.left = '0';
+        yesBtn.style.width = '100vw';
+        yesBtn.style.height = '100vh';
+        yesBtn.style.borderRadius = '0';
+        yesBtn.style.fontSize = '3em';
+        yesBtn.textContent = 'YES 😌❤️';
+        noBtn.style.display = 'none';
+      }
+    });
+
+    yesBtn.addEventListener('click', () => {
+      card.classList.add('hidden');
+      success.classList.remove('hidden');
+      launchHearts();
+    });
+
+    function launchHearts() {
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '❤️';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+        heartsContainer.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 4000);
+      }, 200);
+    }
+  </script>
+</body>
+</html>
